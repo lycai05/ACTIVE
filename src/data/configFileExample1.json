@@ -1,0 +1,104 @@
+[
+    {
+        "id": "hg38-ucsc-gene-annotation-chromatin-interactions",
+        "name": "UCSC Gene annotation",
+        "label": "UCSC Gene annotation",
+        "type": "GeneTrack",
+        "url": "http://47.107.91.5/data/annotation/UCSC_gene_annotation_hg38.srt.reformat.txt.gz",
+        "display": "full",
+        "showGeneLabel": true,
+        "geneLabelFill": "blue",
+        "exonPosStrandFill": "green",
+        "exonNegStrandFill": "orange"
+    },
+    {
+        "id": "GM12878-RNAPII-ChIA-PET-Curve-style2",
+        "name": "GM12878 RNAPII ChIA PET Curve",
+        "label": "GM12878 RNAPII ChIA PET Curve",
+        "type": "CurvTrack",
+        "url": "http://47.107.91.5/data/3D_loops/ENCFF040KUS_WashU.bed.gz",
+        "style": "basicCurve",
+        "lineColor": "purple",
+        "lineWidth": 1,
+        "areaColor": "#3F51B5",
+        "areaOpacity": 0.1
+    },
+    {
+        "id": "GM12878-RNAPII-ChIA-PET-Curve-style3",
+        "name": "GM12878 RNAPII ChIA PET Curve",
+        "label": "GM12878 RNAPII ChIA PET Curve",
+        "type": "CurvTrack",
+        "url": "http://47.107.91.5/data/3D_loops/ENCFF040KUS_WashU.bed.gz",
+        "style": "flatCurve",
+        "lineColor": "purple",
+        "lineWidth": 1,
+        "areaColor": "#3F51B5",
+        "areaOpacity": 0.1
+    },
+    {
+        "id": "chromatin_cluster_1",
+        "type": "PclsTrack",
+        "url": "http://47.107.91.5/data/3D_loops/ENCFF040KUS_WashU.bed.gz",
+        "name": "chromatin_cluster_1",
+        "label": "chromatin_cluster_2",
+        "lineColor": "#FF5722",
+        "lineWidth": 8,
+        "anchorColor": "#3F51B5"
+    },
+    {
+        "id": "GM12878-RNAPII-ChIA-PET-network",
+        "name": "GM12878 RNAPII ChIA PET Curve",
+        "label": "GM12878 RNAPII ChIA PET Curve",
+        "type": "NetworkTrack",
+        "url": "http://47.107.91.5/data/3D_loops/ENCFF040KUS_WashU.bed.gz",
+        "nodeColor": "purple",
+        "nodeOpacity": 1,
+        "edgeWidth": 1,
+        "edgeColor": "red"
+    },
+    {
+        "id": "GM12878-TADs",
+        "name": "GM12878 TADs",
+        "label": "GM12878 TADs",
+        "type": "DomainTrack",
+        "url": "http://47.107.91.5/data/tads/GM12878_TADs_srt.bed.gz",
+        "lineColor": "purple",
+        "lineWidth": 1,
+        "areaColor": "#3F51B5",
+        "areaOpacity": 0.1
+      },
+      {
+        "id": "GM12878 HiC compartments",
+        "name": "GM12878 HiC compartments",
+        "label": "GM12878 HiC compartments",
+        "type": "LineGTrack",
+        "url": "http://47.107.91.5/data//compartments/ENCFF713FCA.bigWig",
+        "lineColor": "purple"
+      },
+      {
+        "id": "GM12878-heatmap-triangle",
+        "name": "GM12878 RNAPII ChIA PET Curve",
+        "label": "GM12878 RNAPII ChIA PET Curve",
+        "type": "HicTrack",
+        "url": "http://47.107.91.5/data//3D_hic/ENCFF003VUL.hic",
+        "maxCountColor": "red",
+        "dotOpacity": "0.5"
+    },
+      {
+        "id": "square-heatmap",
+        "name": "square-heatmap",
+        "label": "square-heatmap",
+        "type": "HicSquareTrack",
+        "url": "http://47.107.91.5/data//3D_hic/ENCFF003VUL.hic",
+        "maxCountColor": "green",
+        "dotOpacity": "0.5"
+      },
+      {
+        "id": "GM12878-Topologically-associated-domains",
+        "name": "Topologically associated domains",
+        "label": "Topologically associated domains",
+        "type": "SclsTrack",
+        "url": "http://47.107.91.5/data/tads/GM12878_TADs_srt.bed.gz",
+        "anchorColor": "green"
+      }
+]
