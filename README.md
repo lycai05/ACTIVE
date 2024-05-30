@@ -1,6 +1,6 @@
 # EXPRESSO
 EXPRESSO (EXPloration of Regulatory Epigenome with Spatial and Sequence Observations) is a platform to visualize and explore the non-coding mutations contributing to deregulation of cis-regulatory elements. Noncoding regulatory sequences, particularly enhancers and promoters, are key determinants of tissue-specific gene expression. Multiple mutation types have been reported to disrupt enhancers and promoters and expression of their target genes, including single-nucleotide variants (SNVs), small insertion and deletions (indels), and large structural variants (SVs). EXPRESSO has the following features:
-- Provided expresso.js, a genome browser to explore and visualize multi-omics datasets, which can visualize both 3D genomic data and genetic datasets.
+- Provided Expresso.js, a genome browser to explore and visualize multi-omics datasets, which can visualize both 3D genomic data and genetic datasets.
 - Intergrated 299,740,245 transcription-associated chromatin interactions from 78 cancer and 60 non-cancer cell types. Each cell line contains individual web page of track view and tabular view.
 - Annotated 1,886,345 cancer-associated anchor promoter and enhancers using ATAC-seq datasets from TCGA, as well as 1,543,335 noncoding somatic SNVs and 37,374 SVs from from PCWAG whole genome sequencing datasets, to visualize and explore the non-coding mutations contributing to deregulation of cis-regulatory elements.
 
