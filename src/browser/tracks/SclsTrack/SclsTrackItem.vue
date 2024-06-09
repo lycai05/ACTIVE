@@ -69,7 +69,7 @@ const option = computed(()=> {
 
 const url = props.option.url
 const isVisible = ref(false)
-let visibilityWidth = 10000000
+let visibilityWidth = 50000000
 const canvasReady = ref(false)
 
 const _measureWidth = (canvas, w, scls, c, showLable) => {
@@ -78,7 +78,6 @@ const _measureWidth = (canvas, w, scls, c, showLable) => {
         cstart = Math.max(1, c(scls.start)),
         cend = Math.min(w, c(scls.end + 1)),
         actualWidth = Math.max(cend - cstart, showLable ? ctx.measureText(scls._text).width : 0);
-    console.log(cstart,cend)
     return { start: cstart, end: cstart + actualWidth };
 }
 
@@ -140,8 +139,8 @@ const _drawItem = (canvas, x, y, w, h, scls, colors, c) => {
 
     var prot = 1;
     if (scls.strand == "+") prot = 1; else if (scls.strand == "-") prot = -1;
-    _drawAnchor(ctx, cstart, -3 * hRatio, cend - cstart, 6 * hRatio, prot, prot); // _drawClusterAnchor: function(ctx, x, y, w, h, l_, r_)
-
+    // _drawAnchor(ctx, cstart, -3 * hRatio, cend - cstart, 6 * hRatio, prot, prot); // _drawClusterAnchor: function(ctx, x, y, w, h, l_, r_)
+    _drawAnchor(ctx, cstart, -3 * hRatio, cend - cstart, 6 * hRatio, 0, 0)
     if (showLabel.value) {
         // console.log('showLabel')
         // 5. write symbol/accession

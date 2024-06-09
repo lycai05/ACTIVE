@@ -17,9 +17,9 @@ export const seriesItem = {
     fontSize: 12
   },
   itemStyle: {
-    color: 'blue',
+    color: '#546B8A',
     borderRadius: 0,
-    opacity: 1
+    opacity: 0.5
   }
 }
 

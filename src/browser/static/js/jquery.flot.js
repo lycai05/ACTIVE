@@ -2254,7 +2254,7 @@
             var maxDistance = options.grid.mouseActiveRadius,
                 smallestDistance = maxDistance * maxDistance + 1,
                 item = null, foundPoint = false, i, j;
-            console.log('========================')
+            // console.log('========================')
             for (i = series.length - 1; i >= 0; --i) {
                 if (!seriesFilter(series[i]))
                     continue;

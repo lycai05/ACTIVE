@@ -23,10 +23,10 @@ export default defineConfig({
   },
   build: {
     lib: {
-      entry: './src/browser/elements/ActiveBrowser/index.ts',
+      entry: './src/browser/elements/Expresso/index.ts',
       // sentry: './src/main.ts',
-      name: 'ActiveBrowser',
-      fileName: (format) => `active-browser.${format}.js`
+      name: 'Expresso',
+      fileName: (format) => `Expresso.${format}.js`
     },
     rollupOptions: {
       // Make sure to externalize Vue and any other dependencies you do not want to bundle

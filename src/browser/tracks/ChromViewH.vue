@@ -288,7 +288,7 @@ function drawChrom(chrom, min, max, chromSizes, chromBands, width, _colorCodes, 
     if (type.value === 'full') {
         zoomInPlot.value = $.plot(zoomIn.value, xvalues, options);
         $(zoomIn.value).bind("plotselected", function (event, ranges) {
-console.log(ranges.xaxis)
+// console.log(ranges.xaxis)
             // clamp the zooming to prevent eternal zoom
 
             if (ranges.xaxis.to - ranges.xaxis.from < 0.00001) {
@@ -305,7 +305,7 @@ console.log(ranges.xaxis)
             // start.value =  ranges.xaxis.from
             // end.value =  ranges.xaxis.to
             emit('zoomTo', chrom, ranges.xaxis.from, ranges.xaxis.to)
-            console.log(ranges)
+            // console.log(ranges)
             // zoomInPlot.value  = $.plot(zoomIn.value, filteredData,
             //     $.extend(true, {}, options, {
             //         xaxis: { min: ranges.xaxis.from, max: ranges.xaxis.to },
@@ -324,7 +324,7 @@ console.log(ranges.xaxis)
 
     $(overview.value).bind("plotselected", function (event, ranges) {
         emit('zoomTo', chrom, ranges.xaxis.from, ranges.xaxis.to)
-        console.log(chrom, ranges.xaxis.from, ranges.xaxis.to)
+        // console.log(chrom, ranges.xaxis.from, ranges.xaxis.to)
         // zoomInPlot.value.setSelection(ranges);
         
     });
@@ -358,7 +358,6 @@ const { width } = useElementSize(canvasContainer)
 
 onMounted(() => {
     let xvalues = drawChrom(chrom.value, min.value, max.value, chromSizes.value, chromBands.value, pixelWidth.value, _colorCodes, cytoband);
-    console.log(xvalues)
     overviewPlot.value.setSelection({
         xaxis: { min: start.value, max: end.value },
         yaxis: { min: 0, max: 0.05 }
@@ -400,7 +399,7 @@ onMounted(() => {
             oldChrom = chrom.value
             return
         }
-        console.log(start.value, end.value)
+        // console.log(start.value, end.value)
         overviewPlot.value.setSelection({
             xaxis: {
                 from: start.value,

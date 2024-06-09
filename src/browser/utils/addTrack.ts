@@ -93,7 +93,7 @@ const sessionStore = useSessionStore();
 
    // compartment track
    positiveE1Color: 'series[0].itemStyle.positiveE1Color',
-   negativeE1Color: 'series[0].itemStyle.positiveE1Color',
+   negativeE1Color: 'series[0].itemStyle.negativeE1Color',
 
    // Stripe track
    stripeFill: 'series[0].itemStyle.stripeFill',

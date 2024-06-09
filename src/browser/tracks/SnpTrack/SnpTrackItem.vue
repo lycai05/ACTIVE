@@ -38,41 +38,26 @@ const props = defineProps({
     },
 })
 
-const prepad = ref(0)
-const postpad = ref(0)
-const h = ref(8)
+
 const canvasContainer = ref(null)
-const canvas = ref(null)
-const showLabel = ref(false)
-const label = ref(null)
-
 const { width } = useElementSize(canvasContainer.value)
-
 const showSpin = ref(false)
 const chrom = computed(
     () => props.location.chrom
 )
-
 const start = computed(
     () => props.location.start
 )
-
 const end = computed(
     () => props.location.end
 )
-
 const option = computed(() => {
     return props.option
 })
-
 const url = props.option.url
 const isVisible = ref(false)
 let visibilityWidth = 10000000
 const canvasReady = ref(false)
-
-
-const filteredData = ref([]);
-
 const file = new TabixIndexedFile({
     filehandle: new RemoteFile(url),
     tbiFilehandle: new RemoteFile(url + '.tbi')
@@ -126,8 +111,6 @@ onMounted(() => {
             }
             ))
 
-
-
             var plot = $.plot(canvasContainer.value, transformedArray, {
                 series: {
                     lines: {
@@ -138,9 +121,11 @@ onMounted(() => {
                         lineWidth: 1,
                         radius: 5,
                         fill: true,
-                        fillColor: props.option.series[0].itemStyle.color//,
+                        fillColor: props.option.series[0].itemStyle.color,
+                        opacity: props.option.series[0].itemStyle.opacity
                         // color: props.option.series[0].itemStyle.color
-                    }
+                    },
+                    shadowSize: 0
                 },
                 grid: {
                     show: true,

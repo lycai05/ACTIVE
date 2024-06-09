@@ -112,8 +112,6 @@ const plotHic = (dataset, canvasWidth, canvasHeight) => {
     var margin = { top: 0, right: 0, bottom: 0, left: 0 },
       width = canvasWidth,
       height = canvasWidth;
-  console.log(width, height)
-  console.log(end.value, start.value)
     // var tooltip = d3.select("body").append("div")
     //   .attr("id", "tooltip")
     //   .style("opacity", 1);
@@ -308,7 +306,6 @@ onMounted(async () => {
         showSpin.value = true
         let lines = []
         await file.getLines(chrom.value, start.value, end.value, function (line, fileOffset) {
-          console.log(line)
             const splitData = line.split(/,/)
             const arr = splitData[0].split(/[\s,:-]+/)
             const anchor = splitData[1].split(/,/)
@@ -323,7 +320,6 @@ onMounted(async () => {
             lines.push(addedData)
 
         })
-        // console.log(lines)
         // _makeInitialRequest(canvasContainer.value, lines, width.value)
         showSpin.value = true
         // canvasContainer.value.innerHTML = ''

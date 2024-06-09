@@ -193,7 +193,7 @@ function throttle(func, limit) {
 }
 
 const zoomTo2 = (chrom, start, end) => {
-  console.log(chrom, start, end)
+  // console.log(chrom, start, end)
 
   if (chrom == null) {
     chrom = corenavStore.value.chrom
@@ -208,7 +208,7 @@ const zoomTo2 = (chrom, start, end) => {
   start = Math.round(s)
   end = Math.round(e)
   if (end - start < minRegionSize) {
-    console.log('Size less then 50bp')
+    // console.log('Size less then 50bp')
   } else {
     // after zooming, we need to refresh the locations
     corenavStore.value.chrom = chrom
@@ -272,7 +272,7 @@ const sessionTracks = computed(() => {
 
 const trackComponents = ref([])
 watch(sessionTracks,(newTracks, oldTracks)=>{
-  console.log(newTracks,oldTracks)
+  // console.log(newTracks,oldTracks)
     if (newTracks.length > oldTracks.length) {
         // Update only if the array length has increased
         trackComponents.value = newTracks;

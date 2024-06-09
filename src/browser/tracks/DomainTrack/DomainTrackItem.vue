@@ -253,7 +253,7 @@ const plotHic = async (chrom, start, end, canvasWidth, canvasHeight) => {
   // console.log(width, height)
   dataset.forEach(function (d) {
 
-    console.log(d)
+    // console.log(d)
     var x = xScale(d.start);
     var y = xScale(d.end);
     const side = (y - x) / Math.sqrt(2);

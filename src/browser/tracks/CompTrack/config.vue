@@ -3,19 +3,17 @@
   <global-setting :optionData="optionData"></global-setting>
   <CollapseItem v-for="(item, index) in seriesList" :key="index" name="Track options" :expanded="true">
     <SettingItemBox name="Fill color">
-      <SettingItem name="Pos  fill">
+      <SettingItem name="Pos fill">
         <n-color-picker
           size="small"
           :modes="['hex']"
-          :default-value="item.itemStyle.positiveE1Color"
           v-model:value="item.itemStyle.positiveE1Color"
         ></n-color-picker>
       </SettingItem>
-      <SettingItem name="Neg  fill">
+      <SettingItem name="Neg fill">
         <n-color-picker
           size="small"
           :modes="['hex']"
-          :default-value="item.itemStyle.negativeE1Color"
           v-model:value="item.itemStyle.negativeE1Color"
         ></n-color-picker>
       </SettingItem>

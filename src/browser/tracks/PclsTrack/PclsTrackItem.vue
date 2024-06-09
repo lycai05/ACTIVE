@@ -82,7 +82,7 @@ const end = computed(
 // const trackId = ref(props.trackId)
 const isVisible = ref(true)
 
-let visibilityWidth = 1000000
+let visibilityWidth = 10000000
 const selectedInfo = ref('')
 
 
@@ -548,8 +548,8 @@ onMounted(() => {
     watch([() => width.value], () => {
         showSpin.value = true
         if (width.value > 0) {
-            console.log('widht changes', width.value)
-            console.log(lines)
+            // console.log('widht changes', width.value)
+            // console.log(lines)
             drawPlotX(canvas.value, lines, false, canvasContainer.value, h.value, prepad.value, postpad.value, showLabel.value, _drawItem, _measureWidth, start.value, end.value, colors, _addLinks)
         }
         showSpin.value = false;

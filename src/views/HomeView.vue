@@ -1,27 +1,17 @@
 <template>
     <n-card class="mb-6">
-     Use curves, clusters and networks to indicate chromatin interactions between two genomic regions
  
    </n-card>
-     <ActiveBrowser
+     <ExpressoVue
        id="testID"
       :assembly="asm"
        :tracksInfo="tracksInfo"
-     ></ActiveBrowser>
- <!-- </div> -->
+     ></ExpressoVue>
+
  </template>
-     <script setup lang="ts"> 
- 
- // import 'jquery/jquery.min.js'
- // import 'jquery-ui-dist/jquery-ui.min.js'
- // import '../../static/js/jquery.flot.js';
- // import '../../static/js/jquery.flot.downsample.js';
- // import '../../static/js/jquery.flot.selection.js';
- // import '../ActiveBrowser/plotCurve.js'
- import ActiveBrowser from "@/browser/elements/ActiveBrowser/ActiveBrowser.vue"
- // import  "../../../dist/style.css"
- // import chromBands from '../../data/chromBands.json'
- 
+<script setup lang="ts"> 
+ import ExpressoVue from "@/browser/elements/Expresso/ExpressoVue.vue"
+
      let asm = {
        label: 'hg38',
        chromSizes: {
@@ -65,100 +55,173 @@
      name: 'Hg38 sequence',
      label: 'Hg38 sequence',
      type: 'SeqTrack',
-     url: 'http://47.107.91.5/data/annotation/GRCm38.primary_assembly.genome.fa'
+     url: 'https://genome3d.oss-cn-shenzhen.aliyuncs.com/annotation/hg38/GRCm38.primary_assembly.genome.fa'
    },
    {
      id: 'hg38-ucsc-gene-annotation-chromatin-interactions',
      name: 'UCSC Gene annotation',
      label: 'UCSC Gene annotation',
      type: 'GeneTrack',
-     url: 'http://47.107.91.5/data/annotation/UCSC_gene_annotation_hg38.srt.reformat.txt.gz'
-   },
-   {
-     id: 'GM12878 HiC compartments',
-     name: 'GM12878 HiC compartments',
-     label: 'GM12878 HiC compartments',
-     type: 'CompTrack',
-     url:'http://47.107.91.5/data/compartments/ENCFF713FCA.bigWig',
-     positiveE1Color: 'orange',
-     negativeE1Color: 'green'
-   },
-   {
-     id: 'GM12878-RNAPII-ChIA-PET-Curve-style1',
-     name: 'GM12878 RNAPII ChIA PET Curve',
-     label: 'GM12878 RNAPII ChIA PET Curve',
-     type: 'CurvTrack',
-     url: 'http://47.107.91.5/data/3D_loops/ENCFF040KUS_WashU.bed.gz',
-     style: 'rectCurve',
-     areaOpacity: 0
-   },  
-   {
-     id: 'GM12878-RNAPII-ChIA-PET-Curve-style2',
-     name: 'GM12878 RNAPII ChIA PET Curve2',
-     label: 'GM12878 RNAPII ChIA PET Curve2',
-     type: 'CurvTrack',
-     url: 'http://47.107.91.5/data/3D_loops/ENCFF040KUS_WashU.bed.gz',
-     style: 'basicCurve'
-   },  
-   {
-   id: 'GM12878 copy number',
-   name: 'GM12878 copy number',
-   label: 'GM12878 copy number',
-   type: 'CnvTrack',
-   url: 'http://47.107.91.5/data/cnv/sorted_extended_mock_data.bed.gz'
-   },
-   {
-     id: 'Brain_Cortex eqtl',
-     name: 'Brain_Cortex eqtl',
-     label: 'Brain_Cortex eqtl',
-     type: 'PclsTrack',
-     url: 'http://47.107.91.5/data/eqtl/gene_snv_pairs/Brain_Cortex.bed.gz',
-     style: 'block'
-   },
-
-   {
-     id: 'GM12878 RNAPII ChIA-PET 1D coverage',
-     name: 'GM12878 RNAPII ChIA-PET 1D coverage',
-     label: 'GM12878 RNAPII ChIA-PET 1D coverage',
-     type: 'LineGTrack',
-     url: 'http://47.107.91.5/data/3D_bigwig/ENCFF085KDA.bigWig'
+     url: 'https://genome3d.oss-cn-shenzhen.aliyuncs.com/annotation/hg38/UCSC_gene_annotation_hg38.srt.reformat.txt.gz'
    },
    {
    id: 'GM12878 triangle-heatmap',
    name: 'triangle-heatmap',
    label: 'triangle-heatmap',
    type: 'HicTrack',
-   url: 'http://47.107.91.5/data/stripes/GSM5858339.hic',
+   url: 'https://genome3d.oss-cn-shenzhen.aliyuncs.com/hic/GSM4417586/GSM4417586.contact_matrix.hic',
    display: 'triangle'
  },
- {
+   {
+     id: 'Compartments',
+     name: 'Compartments',
+     label: 'Compartments',
+     type: 'CompTrack',
+     url: 'https://genome3d.oss-cn-shenzhen.aliyuncs.com/hic/GSM4417586/GSM4417586.compartments_E1.bigwig'
+   },
+   {
+     id: 'Contact domains',
+     name: 'Contact domains',
+     label: 'Contact domains',
+     type: 'DomainTrack',
+     url: 'https://genome3d.oss-cn-shenzhen.aliyuncs.com/hic/GSM4417586/GSM4417586.contact_domains.bed.gz'
+   },  
+   {
+     id: 'Domain boundaries',
+     name: 'Domain boundarie',
+     label: 'Domain boundarie',
+     type: 'SclsTrack',
+     url: 'https://genome3d.oss-cn-shenzhen.aliyuncs.com/hic/GSM4417586/GSM4417586.domain_boundaries.bed.gz',
+   }, 
+  //  {
+  //    id: 'Insulation score',
+  //    name: 'Insulation score',
+  //    label: 'Insulation score',
+  //    type: 'LineGTrack',
+  //    url:'https://genome3d.oss-cn-shenzhen.aliyuncs.com/hic/GSM4417586/GSM4417586.insulation_score.bigwig',
+  //    positiveE1Color: 'orange',
+  //    negativeE1Color: 'green'
+  //  },
+   {
    id: 'GM12878 dot plot',
    name: 'GM12878 dot plot',
    label: 'GM12878 dot plot',
    type: 'DotTrack',
-   url: 'http://47.107.91.5/data/3D_loops/ENCFF040KUS_WashU.bed.gz'
+   url: 'https://genome3d.oss-cn-shenzhen.aliyuncs.com/hic/GSM4417586/GSM4417586.chromatin_loops.bed.gz'
+   },
+   {
+     id: 'GM12878-RNAPII-ChIA-PET-Curve-style2',
+     name: 'GM12878 RNAPII ChIA PET Curve2',
+     label: 'GM12878 RNAPII ChIA PET Curve2',
+     type: 'CurvTrack',
+     url: 'https://genome3d.oss-cn-shenzhen.aliyuncs.com/hic/GSM4417586/GSM4417586.chromatin_loops.bed.gz',
+     style: 'basicCurve'
+   },  
+   {
+   id: 'GM12878 netowrk',
+   name: 'GM12878 netowrk',
+   label: 'GM12878 netowrk',
+   type: 'NetworkTrack',
+   url: 'https://genome3d.oss-cn-shenzhen.aliyuncs.com/hic/GSM4417586/GSM4417586.chromatin_loops.bed.gz'
    },
    {
    id: 'GM12878 stripes',
    name: 'GM12878 stripes',
    label: 'GM1287 stripes',
    type: 'StripeTrack',
-   url: 'http://47.107.91.5/data/stripes/stripenn_result_srt.bed.gz'
+   url: 'https://genome3d.oss-cn-shenzhen.aliyuncs.com/hic/GSM4417586/GSM4417586.stripes.bed.gz'
    },
- {
-     id: 'GM12878-TADs',
-     name: 'GM12878 TADs',
-     label: 'GM12878 TADs',
-     type: 'DomainTrack',
-     url: 'http://47.107.91.5/data/tads/GM12878_TADs_srt.bed.gz',
-   },  
+  //  {
+  //  id: 'GM12878 stripes2',
+  //  name: 'GM12878 stripes',
+  //  label: 'GM1287 stripes',
+  //  type: 'StripeTrack',
+  //  url: 'http://47.107.91.5/data/stripes/stripenn_result_srt.bed.gz'
+  //  },
+  //  {
+  //  id: 'GM12878 copy number',
+  //  name: 'GM12878 copy number',
+  //  label: 'GM12878 copy number',
+  //  type: 'CnvTrack',
+  //  url: 'http://47.107.91.5/data/cnv/sorted_extended_mock_data.bed.gz'
+  //  },
+  //  {
+  //    id: 'Brain_Cortex eqtl',
+  //    name: 'Brain_Cortex eqtl',
+  //    label: 'Brain_Cortex eqtl',
+  //    type: 'PclsTrack',
+  //    url: 'http://47.107.91.5/data/eqtl/gene_snv_pairs/Brain_Cortex.bed.gz',
+  //    style: 'block'
+  //  },
+
+  //  {
+  //    id: 'GM12878 RNAPII ChIA-PET 1D coverage',
+  //    name: 'GM12878 RNAPII ChIA-PET 1D coverage',
+  //    label: 'GM12878 RNAPII ChIA-PET 1D coverage',
+  //    type: 'LineGTrack',
+  //    url: 'http://47.107.91.5/data/3D_bigwig/ENCFF085KDA.bigWig'
+  //  },
+  {
+     id: 'PCAWG DEL',
+     name: 'PCAWG DEL',
+     label: 'PCAWG DEL',
+     type: 'CnvTrack',
+     url: 'https://genome3d.oss-cn-shenzhen.aliyuncs.com/pcawg/sv/pcawg_merged_sv_DEL.less10Mb.bed.gz',
+   },
    {
-     id: 'Finn GWAS',
-     name: 'Finn GWAS',
-     label: 'Finn GWAS',
+     id: 'PCAWG DUP',
+     name: 'PCAWG DUP',
+     label: 'PCAWG DUP',
+     type: 'SclsTrack',
+     url: 'https://genome3d.oss-cn-shenzhen.aliyuncs.com/pcawg/sv/pcawg_merged_sv_DUP.less10Mb.bed.gz',
+   }, 
+   {
+     id: 'PCAWG Translocation',
+     name: 'PCAWG Translocation',
+     label: 'PCAWG Translocation',
+     type: 'PclsTrack',
+     url: 'https://genome3d.oss-cn-shenzhen.aliyuncs.com/pcawg/sv/translocation/pcawg_sv_TRA_Biliary-AdenoCA_washU.bed.gz',
+    //  style: 'rectCurve'
+   },
+   {
+     id: 'PCAWG t2tINV',
+     name: 'PCAWG t2tINV',
+     label: 'PCAWG t2tINV',
+     type: 'CurvTrack',
+     url: 'https://genome3d.oss-cn-shenzhen.aliyuncs.com/pcawg/sv/t2tINV/pcawg_sv_t2tINV_Liver-HCC_washU.bed.gz',
+     style: 'rectCurve',
+     areaColor: 'white'
+   },
+   {
+     id: 'PCAWG h2hINV',
+     name: 'PCAWG h2hINV',
+     label: 'PCAWG t2tINV',
+     type: 'CurvTrack',
+     url: 'https://genome3d.oss-cn-shenzhen.aliyuncs.com/pcawg/sv/h2hINV/pcawg_sv_h2hINV_Liver-HCC_washU.bed.gz',
+     style: 'rectCurve',
+     areaColor: 'white'
+   },
+   {
+     id: 'PCAWG snv',
+     name: 'PCAWG snv',
+     label: 'PCAWG snv',
+     type: 'SclsTrack',
+     url: 'https://genome3d.oss-cn-shenzhen.aliyuncs.com/pcawg/snv/Biliary-AdenoCA.reformatted.bed.gz',
+   },
+   {
+     id: 'eqtl',
+     name: 'eqtl',
+     label: 'eqtl',
+     type: 'PclsTrack',
+     url: 'https://genome3d.oss-cn-shenzhen.aliyuncs.com/eqtl/Adipose_Subcutaneous.bed.gz',
+   },
+   {
+     id: 'gwas',
+     name: 'gwas',
+     label: 'gwas',
      type: 'SnpTrack',
-     url: 'http://47.107.91.5/data/gwas/Finn_GWAS_srt.txt.gz',
-   }//, 
+     url: 'https://genome3d.oss-cn-shenzhen.aliyuncs.com/gwas/Finn_GWAS_srt.txt.gz',
+   }
    // {
    //   id: 'GM12878-RNAPII-ChIA-PET-Network',
    //   name: 'GM12878 RNAPII ChIA PET Network',

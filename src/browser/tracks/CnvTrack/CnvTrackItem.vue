@@ -140,7 +140,7 @@ function createGenomicVisualization(data, selector, canvasWidth, canvasHeight) {
     .append("rect")
     .attr("x", d => {
         let x = xScale(d.start);
-        console.log("x:", x); // Print x position
+        // console.log("x:", x); // Print x position
         return x;
     })
     .attr("width", d => {
@@ -216,7 +216,7 @@ onMounted( () => {
 
 
             await file.getLines(chrom.value, start.value, end.value, function(line, fileOffset) {
-                console.log(line)
+                // console.log(line)
                 const arr = line.split(/[\s]+/)
                 const addedData = {
                 chrom: arr[0],

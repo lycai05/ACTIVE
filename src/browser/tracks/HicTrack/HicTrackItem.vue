@@ -115,14 +115,16 @@ function createTooltip(element, text) {
   element.addEventListener('mouseout', hideTooltip);
 }
 
+// 用于清除和重置 Canvas
+function resetCanvas() {
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
 const plotHic = (straw, chrom, start, end, chrom1, start1, end1, canvasWidth, canvasHeight, resolution) => {
-  // console.log(chrom, start, end)
   const newChrom = chrom.replace(/chr/g, '')
   const newChrom1 = chrom1.replace(/chr/g, '')
-  // console.log(straw.hicFile)
 
-
-  // console.log(resolution)
   straw.getContactRecords(
     "NONE",
     { chr: newChrom, start: start, end: end },
@@ -130,9 +132,7 @@ const plotHic = (straw, chrom, start, end, chrom1, start1, end1, canvasWidth, ca
     "BP",
     resolution
   ).then(function (dataset) {
-    // console.log(dataset)
     if (dataset.length === 0) {
-      console.log("No data in this region")
       isVisible.value = false
       return
     }
@@ -193,7 +193,6 @@ const plotHic = (straw, chrom, start, end, chrom1, start1, end1, canvasWidth, ca
     const zero_rgba = hexToRGB(props.option.series[0].itemStyle.zeroColor, props.option.series[0].itemStyle.opacity)
     const min_rgba = hexToRGB(props.option.series[0].itemStyle.minCountColor, props.option.series[0].itemStyle.opacity)
     const max_rgba = hexToRGB(props.option.series[0].itemStyle.maxCountColor, props.option.series[0].itemStyle.opacity)
-    console.log([zero_rgba, min_rgba, max_rgba], [0, minCount, maxCount])
     var colorScale = d3.scaleQuantize()
       .range([zero_rgba, min_rgba, max_rgba])
       .domain([0, minCount, maxCount])
@@ -215,6 +214,8 @@ const plotHic = (straw, chrom, start, end, chrom1, start1, end1, canvasWidth, ca
       .attr("id", "tooltip")
       .style("opacity", 0);
 
+
+      
     // SVG & Canvas:
     var canvas = d3.select(canvasContainer.value)
       .append("canvas")
@@ -243,16 +244,10 @@ const plotHic = (straw, chrom, start, end, chrom1, start1, end1, canvasWidth, ca
     // ctxOverlay.translate(width / 2, height / 2)
     // ctxOverlay.rotate(Math.PI / 4)
     // ctxOverlay.scale(1 / Math.sqrt(2), 1 / Math.sqrt(2))
-    console.log(canvasOverlay)
     ctxOverlay.translate(width / 2, height / 2)
     ctxOverlay.rotate(Math.PI / 4)
     ctxOverlay.scale(1 / Math.sqrt(2), 1 / Math.sqrt(2))
-    const mouseout = (event) => {
-      if (crosshairVisible.value) {
-        ctxOverlay.clearRect(0, 0, canvasOverlay.node().width, canvasOverlay.node().height); // Clear the canvas
-        crosshairVisible.value = false;
-      }
-    }
+
 
     // Function to transform mouse coordinates to transformed canvas coordinates
     function getTransformedCoordinates(mouseX, mouseY) {
@@ -272,7 +267,6 @@ const plotHic = (straw, chrom, start, end, chrom1, start1, end1, canvasWidth, ca
     function drawCrosshair(ctx, canvas, x, y) {
 
       var transformedCoords = getTransformedCoordinates(x, y);
-      console.log(x, y, transformedCoords.x, transformedCoords.y)
       // Save the current transformation matrix
       ctx.save();
 
@@ -308,12 +302,10 @@ const plotHic = (straw, chrom, start, end, chrom1, start1, end1, canvasWidth, ca
       var x0 = event.clientX - rect.left;
       var y0 = event.clientY - rect.top;
       const { x, y } = drawCrosshair(ctxOverlay, canvasOverlay.node(), x0, y0);
-      // console.log(x, y)
 
       // var xy = d3.pointer(event);
       var x1 = Math.round(xScale.invert(x));
       var y1 = Math.round(yScale.invert(y));
-      // console.log(x,y)
       if (x1 > xScaleRef.domain()[1]) x1 = xScaleRef.domain()[1];
       if (x1 < xScaleRef.domain()[0]) x1 = xScaleRef.domain()[0];
       if (y1 > yScale.domain()[1]) y1 = yScale.domain()[1];
@@ -327,14 +319,20 @@ const plotHic = (straw, chrom, start, end, chrom1, start1, end1, canvasWidth, ca
         createTooltip(canvas, `${d[0].bin1 * currentBpResolution.value} - ${d[0].bin2 * currentBpResolution.value}: ${d[0].counts} `)
 
       }
-      // console.log(d)
-
-
     }
 
     const mousemove = (event) => {
       crosshairVisible.value = true;
       updateCrosshairPosition(canvasOverlay.node(), event);
+    }
+
+    const mouseout = (event) => {
+      if (crosshairVisible.value) {
+        canvasOverlay.on("mousemove", null)
+        canvasOverlay.on("mouseout", null)
+        ctxOverlay.clearRect(0, 0, canvasOverlay.node().width, canvasOverlay.node().height); // Clear the canvas
+        crosshairVisible.value = false;
+      }
     }
 
     var svg = d3.select(canvasContainer.value)
@@ -346,45 +344,9 @@ const plotHic = (straw, chrom, start, end, chrom1, start1, end1, canvasWidth, ca
 
     var ctx = canvas.node().getContext("2d");
 
-    // canvas.call(zoom);
-
-    // Initial Draw:
-    // drawNodes(dataset);
-
-    //Create Axes:
-    var renderXAxis = svg.append("g")
-      .attr("class", "x axis")
-      .attr("transform", "translate(0," + yScale(0) + ")")
-      .call(xAxis)
-
-    // var renderYAxis = svg.append("g")
-    //     .attr("class", "y axis")
-    //     .call(yAxis)
-    //     .selectAll("text")
-    //     .attr("transform", "rotate(-90)")
-
-    // Handle Zoom:
-    // function zoomed() {
-    //     // rescale the x Axis:
-    //     xScale = d3.event.transform.rescaleX(xScaleRef);  // Use Reference Scale.
-    //     // Redraw the x Axis:
-    //     renderXAxis.call(xAxis.scale(xScale));
-    //     // Clear and redraw the nodes:
-
-    //     drawNodes();
-    // }
-    // Draw nodes:		
-    // function drawNodes(dataset, transform = true) {
     var k = d3.event ? d3.event.transform.k : 1;
     var dw = dotWidth * k;
-    //  ctx.translate(0,height - height/Math.sqrt(2))
-    // //ctx.scale(1,-1)
 
-    //   ctx.rotate(Math.PI/4)
-    // ctx.translate(Math.sqrt((width**2 + height**2)/8), -Math.sqrt((width**2 + height**2)/8))
-    //  ctx.scale(1/Math.sqrt(2),1/Math.sqrt(2))
-    //   ctx.scale( width /Math.sqrt(height**2 + width**2) ,1)
-    // console.log(width)
     if (type.value === 'triangle') {
       ctx.translate(width / 2, height / 2)
       ctx.rotate(Math.PI / 4)

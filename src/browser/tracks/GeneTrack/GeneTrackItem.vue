@@ -1,12 +1,18 @@
 <template>
-    <n-scrollbar v-if="isVisible">
-        <div ref="canvasContainer" class="basic-canvas" :style="props.style" style="height: 120px">
+    <div v-if="isVisible">
+        <div ref="canvasContainer" class="basic-canvas" :style="props.style">
+            <n-scrollbar  class="z-50">
             <canvas ref="canvas"></canvas>
-            <n-spin :show="showSpin" class="absolute left-1/2 top-1/2">
+        </n-scrollbar>
+
+            <n-spin :show="showSpin" class="z-50 absolute left-1/2 top-1/2">
                 <div></div>
             </n-spin>
         </div>
-    </n-scrollbar>
+        <!-- <div v-if="selectedInfo">
+                {{ selectedInfo }}
+            </div> -->
+        </div>
     <div v-else>
 
         <div ref="canvasContainer" class="basic-canvas">

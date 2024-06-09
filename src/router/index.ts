@@ -9,14 +9,6 @@ const router = createRouter({
       meta: {
         title: 'Home'
       }
-    },  
-    {
-      path: '/genome-browser',
-      name: 'genome-browser',
-      component: () => import('@/components/Browser/BrowserTest.vue'),
-      meta: {
-        title: 'Genome Browser'
-      }
     }
   ]
 })

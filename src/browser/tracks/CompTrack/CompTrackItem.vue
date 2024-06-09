@@ -1,15 +1,11 @@
 <template>
     <div class="relative h-full w-full">
-
         <n-scrollbar v-if="isVisible">
-
             <div ref="canvasContainer" class="basic-canvas" :style="props.style">
             <n-spin :show="showSpin" class="z-50 absolute left-1/2 top-1/2" >
                 <div></div>
             </n-spin>
-
             </div>
-
         </n-scrollbar>
         <div v-else>
             <div ref="canvasContainer" class="basic-canvas">
@@ -18,14 +14,12 @@
                 </n-alert>
             </div>
         </div>
-
     </div>
 </template>
 
 <script lang="ts" setup>
 import { ref, onMounted, watch, computed } from 'vue';
 import { useElementSize } from '@vueuse/core'
-// import { TabixIndexedFile } from '@gmod/tabix'
 import { RemoteFile } from 'generic-filehandle'
 import * as d3 from "d3";
 import { BigWig } from '@gmod/bbi'
@@ -49,41 +43,23 @@ const props = defineProps({
     },
 })
 
-const prepad = ref(0)
-const postpad = ref(0)
-const h = ref(8)
 const canvasContainer = ref(null)
-const canvas = ref(null)
-const showLabel = ref(false)
-const label = ref(null)
-
 const { width, height } = useElementSize(canvasContainer)
-
 const showSpin = ref(true)
 const chrom = computed(
     () => props.location.chrom
 )
-
 const start = computed(
     () => props.location.start
 )
-
 const end = computed(
     () => props.location.end
 )
-
 const option = computed(() => {
     return props.option
 })
-
 const url = props.option.url
 const isVisible = ref(false)
-let visibilityWidth = 200000000
-const canvasReady = ref(false)
-
-
-const filteredData = ref([]);
-
 
 function createGenomicVisualization(data, selector, canvasWidth, canvasHeight) {
 
@@ -179,7 +155,6 @@ function createGenomicVisualization(data, selector, canvasWidth, canvasHeight) {
             tooltip.style('opacity', 0);
         });
 
-    
     // Draw dashed line at y = 0
     g.append("line")
         .attr("x1", 0)
@@ -188,19 +163,8 @@ function createGenomicVisualization(data, selector, canvasWidth, canvasHeight) {
         .attr("y2", yScale(0))
         .style("stroke", "gray")
         .style("stroke-width", 0.1)
-        .style("stroke-dasharray", ("3, 3"));
-
-    // Add Axes
-    // const xAxis = d3.axisBottom(xScale);
-    // const yAxis = d3.axisLeft(yScale).ticks(3); // limited ticks for clarity
-
-    // g.append("g").attr("transform", `translate(0,${innerHeight / 2})`).call(xAxis);
-    // g.append("g").call(yAxis);
-    // showSpin.value = false;
-
+        .style("stroke-dasharray", ("3, 3"))
 }
-// let lines = ref([])
-
 
 const filehandle = new RemoteFile(url)
 const file = new BigWig({
@@ -223,6 +187,7 @@ function calculateScale(start, end, viewportWidth) {
     return scale;
 }
 let featurePromise
+let data
 onMounted(() => {
     watch([ () => chrom.value, () => start.value, () => end.value], () => {
         showSpin.value = true
@@ -236,6 +201,7 @@ onMounted(() => {
 
         featurePromise = file.getFeatures(chrom.value, start.value, end.value, { scale: scale })
         featurePromise.then((res) => {
+            data = res
             createGenomicVisualization(res, canvasContainer.value, width.value, height.value)
         })
     }, { immediate: true, deep: true });
@@ -248,16 +214,11 @@ onMounted(() => {
         });
         isVisible.value = true
 
-        featurePromise.then((res) => {
-            createGenomicVisualization(res, canvasContainer.value, width.value, height.value)
-        })
-    })
+            createGenomicVisualization(data, canvasContainer.value, width.value, height.value)
+    }, {deep: true})
 
 
 })
 
-
 </script>
-
-
 <style scoped></style>

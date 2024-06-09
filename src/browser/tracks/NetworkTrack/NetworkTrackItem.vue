@@ -8,29 +8,29 @@
       {{ selectedInfo }}
     </n-alert>
     </div> -->
-    <div v-if="isVisible">
+    <!-- <div v-if="isVisible"> -->
 
-    <div ref="canvasContainer"  :style="props.style" >
-        <!-- <n-spin v-show="showSpin" class="absolute left-1/2 top-1/2"></n-spin> -->
-        <div id="cy"></div>
+        <div ref="canvasContainer" :style="props.style">
+            <!-- <n-spin v-show="showSpin" class="absolute left-1/2 top-1/2"></n-spin> -->
+            <div id="cy"></div>
             <div v-if="selectedInfo">
                 <n-alert title="" type="default" :bordered="true">
 
-                {{ selectedInfo }}
-            </n-alert>
+                    {{ selectedInfo }}
+                </n-alert>
 
             </div>
-      
-    </div>
-</div>
-<div v-else>
 
-<div ref="canvasContainer" class="basic-canvas">
-    <n-alert title="" type="warning">
-    Too many items. Zoom in to see features
-</n-alert>
-</div>
-</div>
+        </div>
+    <!-- </div> -->
+    <!-- <div v-else>
+
+        <div ref="canvasContainer" class="basic-canvas">
+            <n-alert title="" type="warning">
+                Too many items. Zoom in to see features
+            </n-alert>
+        </div>
+    </div> -->
 </template>
   
 <script setup lang="ts">
@@ -79,7 +79,7 @@ const option = computed(() => {
 // const trackId = ref(props.trackId)
 const isVisible = ref(false)
 const selectedInfo = ref('')
-let visibilityWidth = 1000000
+let visibilityWidth = 100000000
 
 const showSpin = ref(false)
 cytoscape.use(coseBilkent);
@@ -134,23 +134,23 @@ onMounted(() => {
         ]
     });
 
-    cy.on('click', 'node', function(evt){
-      console.log( 'clicked ' + evt.target.id() );
-      selectedInfo.value = `Selected interaction anchor ${evt.target.id()}`
+    cy.on('click', 'node', function (evt) {
+        // console.log('clicked ' + evt.target.id());
+        selectedInfo.value = `Selected interaction anchor ${evt.target.id()}`
 
-});
+    });
 
-cy.on('click', 'edge', function(event){
-    // console.log( 'clicked ' +evt.target.source() + ' --- ' + evt.target.target() );
-    console.log(event.target.connectedNodes())
-    // selectedInfo.value 
-    const connectedNodes= event.target.connectedNodes();
-    const connectedAnchor1 = connectedNodes[0]
-    const connectedAnchor2 = connectedNodes[1]
-    console.log(connectedAnchor1.id())
-    selectedInfo.value = `Selected interaction between ${connectedAnchor1.id()} and ${connectedAnchor2.id()}` 
+    cy.on('click', 'edge', function (event) {
+        // console.log( 'clicked ' +evt.target.source() + ' --- ' + evt.target.target() );
+        // console.log(event.target.connectedNodes())
+        // selectedInfo.value 
+        const connectedNodes = event.target.connectedNodes();
+        const connectedAnchor1 = connectedNodes[0]
+        const connectedAnchor2 = connectedNodes[1]
+        // console.log(connectedAnchor1.id())
+        selectedInfo.value = `Selected interaction between ${connectedAnchor1.id()} and ${connectedAnchor2.id()}`
 
-});
+    });
 
 
 
@@ -169,8 +169,18 @@ cy.on('click', 'edge', function(event){
             let edgeIdCounter = 0;
 
             await file.getLines(chrom.value, start.value, end.value, function (line, fileOffset) {
-                const splitData = line.split(/;/)
-                const arr = splitData[0].split(/[\s,:-]+/)
+                let splitData, arr;
+ console.log(line)
+                if (line.includes(";")) {
+                    // Split the line by ";", separate main data and additional data
+                    splitData = line.split(";");
+                    // The main data is in the first segment
+                    arr = splitData[0].split(/[\s,:-]+/);
+                } else {
+                    // If no ";" is present, treat entire line as the main data
+                    arr = line.split(/[\s,:-]+/);
+                }
+
                 const chrom = arr[0]
                 const start = Number(arr[1])
                 const end = Number(arr[2])
@@ -178,23 +188,28 @@ cy.on('click', 'edge', function(event){
                 const start2 = Number(arr[4])
                 const end2 = Number(arr[5])
 
-                let anchor1
-                let anchor2
-                if (splitData.length === 1) {
-                     anchor1 = `${chrom}:${start}-${end}`;
-                     anchor2 = `${chrom2}:${start2}-${end2}`;
-                } else if (splitData.length === 2) {
-                    if (splitData[1].split('|')) {
-                        const anchor = splitData[1].split('|')
-                    // Check and assign anchor1 and anchor2 based on conditions
-                     anchor1 = (anchor[0] === '.' || anchor[0] === 'N' || anchor[0].trim() === '') ? `${chrom}:${start}-${end}` : anchor[0];
-                     anchor2 = (anchor[1] === '.' || anchor[1] === 'N' || anchor[1].trim() === '') ? `${chrom2}:${start2}-${end2}` : anchor[1];
-
-                    } else {
-                        message.error(`Delimiter '|' not found in the second part of the line: "${line}"`)
-                    }
+                let additionalData = null;
+                if (splitData && splitData.length > 1) {
+                    additionalData = splitData.slice(1);
                 }
 
+                let anchor1
+                let anchor2
+                // if (splitData.length === 1) {
+                anchor1 = `${chrom}:${start}-${end}`;
+                anchor2 = `${chrom2}:${start2}-${end2}`;
+                // } else if (splitData.length === 2) {
+                //     if (splitData[1].split('|')) {
+                //         const anchor = splitData[1].split('|')
+                //     // Check and assign anchor1 and anchor2 based on conditions
+                //      anchor1 = (anchor[0] === '.' || anchor[0] === 'N' || anchor[0].trim() === '') ? `${chrom}:${start}-${end}` : anchor[0];
+                //      anchor2 = (anchor[1] === '.' || anchor[1] === 'N' || anchor[1].trim() === '') ? `${chrom2}:${start2}-${end2}` : anchor[1];
+
+                //     } else {
+                //         message.error(`Delimiter '|' not found in the second part of the line: "${line}"`)
+                //     }
+                // }
+                console.log(anchor1, anchor2)
                 // Check if anchors already exist
                 let anchor1Exists = lines.some(item => item.data.id === anchor1);
                 let anchor2Exists = lines.some(item => item.data.id === anchor2);
@@ -213,11 +228,11 @@ cy.on('click', 'edge', function(event){
             })
             // console.log(lines)
             cy.elements().remove(); cy.add(lines);
-            cy.style().selector('node').style({'background-color': option.value.series[0].nodeStyle.fill})
-            cy.style().selector('edge').style({'width': option.value.series[0].edgeStyle.width})
-            console.log(option.value.series[0].edgeStyle.fill)
-            cy.style().selector('edge').style({'line-color': option.value.series[0].edgeStyle.fill})
-            
+            cy.style().selector('node').style({ 'background-color': option.value.series[0].nodeStyle.fill })
+            cy.style().selector('edge').style({ 'width': option.value.series[0].edgeStyle.width })
+            // console.log(option.value.series[0].edgeStyle.fill)
+            cy.style().selector('edge').style({ 'line-color': option.value.series[0].edgeStyle.fill })
+
             const layout = cy.layout({
                 name: 'cose-bilkent',
                 // animate: 'end',

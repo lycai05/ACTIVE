@@ -55,8 +55,6 @@ const end = computed(
 )
 
 const url = props.option.url
-console.log(url)
-
 
 const { width } = useElementSize(canvasContainer)
 
@@ -101,7 +99,6 @@ const _drawPlot = (canvas, xvalues, steps, displayStyle = '') => {
             // reserveSpace: true,
             // font: 10,
             tickFormatter: function (val, axis) {
-                // console.log(val,axis)
                 if (val / 1000 != 0 && val % 1000 == 0) return (val / 1000) + "k";
                 return val;
             }
@@ -118,7 +115,6 @@ const _drawPlot = (canvas, xvalues, steps, displayStyle = '') => {
     } else if (displayStyle === 'rectCurve') {
         params.rectCurve = true
     }
-    console.log(params)
 
     // extend xaxis/yaxis
     // params.xaxis = $.extend(params.xaxis, _get(opts._options, 'xaxis'));
@@ -135,7 +131,6 @@ const _drawPlot = (canvas, xvalues, steps, displayStyle = '') => {
     //         return val * neg;
     //     };
     // }
-    console.log('draw curv==============================')
     const plotObj = $.plot(canvas, xvalues, params);
 
     return plotObj
@@ -188,7 +183,6 @@ const _makeInitialRequest = (canvasEle, xdata, width) => {
     // }
 
 
-    // console.log(xvalues)
     canvasReady.value = false
     // loadingStart()
     showSpin.value = false
@@ -206,10 +200,7 @@ const _makeInitialRequest = (canvasEle, xdata, width) => {
     });
     // loadingFinish()
     let previousPoint = null
-    // console.log(plot.value)
     $(canvasEle).bind("plotclick", function (event, pos, item) {
-        //         console.log('item clicked')
-        //  console.log(event, pos, item)
         if (item) {
 
             // var x = item.datapoint[0].toFixed(2),
@@ -270,9 +261,21 @@ onMounted(() => {
     watch([() => option.value.series, () => chrom.value, () => start.value, () => end.value], async () => {
         showSpin.value = true
         await file.getLines(chrom.value, start.value, end.value, function (line, fileOffset) {
-            const splitData = line.split(/;/)
-            const arr = splitData[0].split(/[\s,:-]+/)
-            const anchor = splitData[1].split(/,/)
+            // Initialize variables to hold split data and the main array
+            let splitData, arr;
+
+            // Check if the line contains ";"
+            if (line.includes(";")) {
+                // Split the line by ";", separate main data and additional data
+                splitData = line.split(";");
+                // The main data is in the first segment
+                arr = splitData[0].split(/[\s,:-]+/);
+            } else {
+                // If no ";" is present, treat entire line as the main data
+                arr = line.split(/[\s,:-]+/);
+            }
+
+            // Construct the primary data object from the array
             const addedData = {
                 chrom: arr[0],
                 start: Number(arr[1]),
@@ -280,12 +283,23 @@ onMounted(() => {
                 chrom2: arr[3],
                 start2: Number(arr[4]),
                 end2: Number(arr[5]),
-                score: Number(arr[6]),
-                anchor1: anchor[0],
-                anchor2: anchor[1]
+                score: Number(arr[6]) // Assuming the score is at position 6
+            };
+
+            // Optional: Handle additional data if the line contained ";"
+            let additionalData = null;
+            if (splitData && splitData.length > 1) {
+                additionalData = splitData.slice(1);
             }
-            lines.push(addedData)
-//  console.log(lines)
+
+            // Push the main data object to the lines array
+            lines.push(addedData);
+
+            // Optionally, handle the additional data
+            if (additionalData) {
+                // console.log("Additional data:", additionalData);
+            }
+
         })
         lines = deduplicateArray(lines)
         _makeInitialRequest(canvasContainer.value, lines, width.value)

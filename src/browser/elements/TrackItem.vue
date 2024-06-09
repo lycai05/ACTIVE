@@ -191,7 +191,6 @@ onMounted(() => {
 
     function checkHeight() {
         const height = cvs_holder.value.offsetHeight;
-        console.log(height)
         if (height > 24) {
             trackItem.value.classList.add('unfolded');
         } else {

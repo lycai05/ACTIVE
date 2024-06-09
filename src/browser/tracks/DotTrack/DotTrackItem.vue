@@ -364,9 +364,9 @@ onMounted(async () => {
 
         lines = []
         await file.getLines(chrom.value, start.value, end.value, function (line, fileOffset) {
-            const splitData = line.split(/;/)
-            const arr = splitData[0].split(/[\s,:-]+/)
-            const anchor = splitData[1].split(/,/)
+            // const splitData = line.split(/;/)
+            const arr = line.split(/[\s,:-]+/)
+            // const anchor = splitData[1].split(/,/)
             const addedData = {
                 chrom: arr[0],
                 start1: Number(arr[1]),
@@ -374,9 +374,9 @@ onMounted(async () => {
                 chrom2: arr[3],
                 start2: Number(arr[4]),
                 end2: Number(arr[5]),
-                score: Number(arr[6]),
-                anchor1: anchor[0],
-                anchor2: anchor[1]
+                score: Number(arr[6])//,
+                // anchor1: anchor[0],
+                // anchor2: anchor[1]
             }
             lines.push(addedData)
 
