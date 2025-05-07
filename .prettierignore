@@ -1,0 +1,2 @@
+src/views/Components/*.vue
+src/assets/scss/shepherd-override.scss

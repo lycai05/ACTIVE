@@ -1,0 +1,1 @@
+export { naive } from './importNative'

@@ -1,0 +1,226 @@
+
+.table-toolbar-inner-popover-title[data-v-a30ff6f4] {
+    padding: 3px 0;
+}
+.table-toolbar-right-icon[data-v-a30ff6f4] {
+    margin-left: 12px;
+    font-size: 16px;
+    /* color: var(--text-color); */
+    cursor: pointer;
+}
+.table-toolbar-right-icon[data-v-a30ff6f4]:hover {
+    color: #1890ff;
+}
+.toolbar-popover[data-v-a30ff6f4] {
+.n-popover__content[data-v-a30ff6f4] {
+        padding: 0;
+}
+}
+
+.y1Axis .tickLabel[data-v-5109650b] {
+    transform: translate(-9px, 0) rotate(-0deg);
+}
+
+.config-item-box[data-v-83c5e739] {
+  position: relative;
+  display: flex;
+  margin: 10px 0;
+}
+.config-item-box .item-left[data-v-83c5e739] {
+  width: 60px;
+  text-align: left;
+  margin-top: 4px;
+  margin-left: 10px;
+  font-size: 14px;
+}
+.config-item-box .item-right[data-v-83c5e739] {
+  display: grid;
+  grid-column-gap: 10px;
+  width: calc(100% - 60px);
+}
+
+.setting-item[data-v-91cfd74c] {
+  display: flex;
+  flex-direction: column;
+  min-width: 110px;
+  text-align: start;
+  margin-bottom: 5px;
+}
+.setting-item .name[data-v-91cfd74c] {
+  margin-top: 2px;
+}
+
+.tooltip {
+    position: absolute;
+    padding: 10px;
+    color: #fff;
+    background: #333;
+    border-radius: 4px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 1000;
+}
+
+.custom-rotate[data-v-82a50d41] {
+  transform: rotate(90deg);
+}
+
+.custom-rotate[data-v-61dd3983] {
+  transform: rotate(90deg);
+}
+
+.y1Axis .tickLabel[data-v-d7f2d1ce] {
+     transform: translate(-9px, 0) rotate(-0deg);
+} 
+
+#cy[data-v-f1c402d7] {
+    width: 100%;
+    height: 90%;
+    z-index: 999;
+}
+h1[data-v-f1c402d7] {
+    opacity: 0.5;
+    font-size: 1em;
+}
+button[data-v-f1c402d7] {
+    margin-right: 10px;
+}
+
+.custom-rotate[data-v-7b54f4a5] {
+  transform: rotate(90deg);
+}
+
+.custom-rotate[data-v-df4d13d0] {
+  transform: rotate(90deg);
+}
+
+.custom-rotate[data-v-a4d6cc72] {
+  transform: rotate(90deg);
+}
+
+
+.track-list:hover .track-config[data-v-5d3287b0] {
+    display: block
+}
+.ui-icon[data-v-5d3287b0] {
+    width: 16px;
+    height: 16px;
+    /* background-image: url(http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/base/images/ui-icons_222222_256x240.png) */
+    /*{iconsContent}*/
+}
+.ui-resizable[data-v-5d3287b0] {
+    position: relative;
+}
+.ui-resizable-handle[data-v-5d3287b0] {
+    /* position: absolute; */
+    font-size: 0.1px;
+    z-index: 10;
+    display: block;
+}
+.ui-resizable-disabled .ui-resizable-handle[data-v-5d3287b0],
+.ui-resizable-autohide .ui-resizable-handle[data-v-5d3287b0] {
+    display: block;
+}
+.ui-resizable-n[data-v-5d3287b0] {
+    cursor: n-resize;
+    height: 7px;
+    width: 100%;
+    top: -5px;
+    left: 0px;
+}
+
+/* .ui-resizable-s {
+    cursor: s-resize;
+    height: 7px;
+    width: 100%;
+    bottom: -5px;
+    left: 0px;
+} */
+.ui-resizable-e[data-v-5d3287b0] {
+    cursor: e-resize;
+    width: 7px;
+    right: -5px;
+    top: 0px;
+    height: 100%;
+}
+.ui-resizable-w[data-v-5d3287b0] {
+    cursor: w-resize;
+    width: 7px;
+    left: -5px;
+    top: 0px;
+    height: 100%;
+}
+.ui-resizable-se[data-v-5d3287b0] {
+    cursor: se-resize;
+    width: 12px;
+    height: 12px;
+    right: 1px;
+    bottom: 1px;
+}
+.ui-resizable-sw[data-v-5d3287b0] {
+    cursor: sw-resize;
+    width: 9px;
+    height: 9px;
+    left: -5px;
+    bottom: -5px;
+}
+.ui-resizable-nw[data-v-5d3287b0] {
+    cursor: nw-resize;
+    width: 9px;
+    height: 9px;
+    left: -5px;
+    top: -5px;
+}
+.ui-resizable-ne[data-v-5d3287b0] {
+    cursor: ne-resize;
+    width: 9px;
+    height: 9px;
+    right: -5px;
+    top: -5px;
+}
+.ui-icon-gripsmall-diagonal-se[data-v-5d3287b0] {
+    background-position: -64px -224px;
+}
+.resizable-helper[data-v-5d3287b0] {
+    border: 2px dotted rgb(193, 193, 216);
+    background-color: rgb(193, 193, 216, 0.4);
+}
+
+
+/* On hover, display the buttons if track-item is not too small */
+.track-item-config-holder .btn.close[data-v-5d3287b0],
+.track-item-config-holder .track-item-setting[data-v-5d3287b0] {
+    display: none;
+}
+
+
+/* On hover, display the buttons if track-item is not too small */
+.track-item-config-holder:hover .btn.close[data-v-5d3287b0],
+.track-item-config-holder:hover .track-item-setting[data-v-5d3287b0] {
+    display: block;
+}
+
+/* Specific class for when track-item is too small */
+.track-item.unfolded .btn.close[data-v-5d3287b0],
+.track-item.unfolded .track-item-setting[data-v-5d3287b0] {
+    display: block
+}
+
+
+
+/* 拖动时的镜像（"ghost"类）样式 */
+.ghost[data-v-5d7007a6] {
+    opacity: 0.5;  /* 半透明效果 */
+    border: 2px dashed #CCCCCC;  /* 虚线边框 */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);  /* 阴影效果，增加立体感 */
+    transition: transform 0.2s ease;  /* 平滑变化 */
+}
+
+/* 实际拖动的元素（"drag"类）样式 */
+.drag[data-v-5d7007a6] {
+    opacity: 0.7;  /* 半透明效果，稍微透明一些表示正在被拖动 */
+    border-color: #666666;  /* 边框颜色变化 */
+    background-color: #f4f4f4;  /* 背景颜色变化，提高区分度 */
+    transform: scale(1.05);  /* 轻微放大 */
+    z-index: 1000;  /* 确保拖动时在顶层 */
+}

@@ -1,0 +1,32 @@
+
+
+/* END - Bootstrap fixes */
+body {
+  font-family: "Segoe UI", Tahoma, Verdana, Arial, sans-serif;
+  font-size: 12px;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* chromVIew text unselectable */
+.tickLabels {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                        supported by Chrome, Opera and Firefox */
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Don't display the color value in n-color-picker component */
+.n-color-picker-trigger__value {
+  display: none;
+}
