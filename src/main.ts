@@ -5,6 +5,10 @@ const meta = document.createElement('meta')
 meta.name = 'naive-ui-style'
 document.head.appendChild(meta)
 
+import jQuery from 'jquery'
+// @ts-ignore
+window.$ = window.jQuery = jQuery
+
 // import { createI18n } from "vue-i18n"
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 // import VueApexCharts from "vue3-apexcharts"
