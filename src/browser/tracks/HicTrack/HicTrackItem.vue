@@ -455,7 +455,7 @@ onMounted(() => {
 					.style(option.value.yAxis.flip ? 'bottom' : 'top', 'auto') // Clear the opposite property
 			}
 
-			instance.fetchAndRenderData(
+			instance?.fetchAndRenderData(
 				makeSerializable({
 					normalization: selectedNormalization.value,
 					chrom: chrom.value,

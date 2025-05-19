@@ -92,7 +92,7 @@ function getEventBinders(worker: Worker) {
 		const scope = 'echarts:'
 		const type = event.data.type
 
-		if (type.startsWith(scope)) {
+		if (type?.startsWith(scope)) {
 			const listeners = listenersMap.get(type.slice(scope.length))
 			listeners?.forEach(listener => {
 				listener(event.data.data)
