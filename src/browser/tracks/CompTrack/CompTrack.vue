@@ -4,9 +4,9 @@
     :option="props.config.option"
     @zoomTo="handleZoomTo"
     >
-    </comp-track-item> 
+    </comp-track-item>
   </template>
-  
+
 <script setup lang="ts">
 import { defineProps } from 'vue'
 import CompTrackItem from './CompTrackItem.vue'
@@ -28,15 +28,18 @@ const handleZoomTo = (chrom, start, end) => {
 }
 </script> -->
 
-
 <template>
-  <div class="track-container">
-    <comp-track-item v-for="(view, index) in props.trackViews" :key="index" :location="view"
-      :option="props.config.option" :style="getTrackViewStyle(view, index, props.trackViews, props.style)" 
-      :trackViewIndex="index"
-      @zoom-to="handleZoomTo"
-      />
-  </div>
+	<div class="track-container">
+		<comp-track-item
+			v-for="(view, index) in props.trackViews"
+			:key="index"
+			:location="view"
+			:option="props.config.option"
+			:style="getTrackViewStyle(view, index, props.trackViews, props.style)"
+			:trackViewIndex="index"
+			@zoom-to="handleZoomTo"
+		/>
+	</div>
 </template>
 
 <script setup lang="ts">
@@ -46,31 +49,31 @@ import { getTrackViewStyle } from '../utils/trackViewUtils'
 import type { TrackView } from '../utils/trackViewUtils'
 
 const props = defineProps({
-  config: {
-    type: Object,
-    required: true
-  },
-  trackViews: {
-    type: Array as () => TrackView[],
-    required: true
-  },
-  style: {
-    type: Object,
-    required: false,
-    default: () => ({})
-  }
+	config: {
+		type: Object,
+		required: true
+	},
+	trackViews: {
+		type: Array as () => TrackView[],
+		required: true
+	},
+	style: {
+		type: Object,
+		required: false,
+		default: () => ({})
+	}
 })
 
 const emit = defineEmits(['zoomTo'])
 
 const handleZoomTo = (chrom: string, start: number, end: number, activeTrackViewIndex: number) => {
-  emit('zoomTo', chrom, start, end, activeTrackViewIndex)
+	emit('zoomTo', chrom, start, end, activeTrackViewIndex)
 }
 </script>
 
 <style scoped>
 .track-container {
-  display: flex;
-  align-items: center;
+	display: flex;
+	align-items: center;
 }
 </style>
