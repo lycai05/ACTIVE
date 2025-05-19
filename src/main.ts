@@ -1,11 +1,12 @@
-const meta = document.createElement("meta")
-meta.name = "naive-ui-style"
+import { createApp } from 'vue'
+import { createPinia } from 'pinia'
+
+const meta = document.createElement('meta')
+meta.name = 'naive-ui-style'
 document.head.appendChild(meta)
 
-import { createApp } from "vue"
-import { createPinia } from "pinia"
 // import { createI18n } from "vue-i18n"
-import piniaPluginPersistedstate from "pinia-plugin-persistedstate"
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 // import VueApexCharts from "vue3-apexcharts"
 // import VueGoogleMaps from "@fawmi/vue-google-maps"
 // @ts-ignore
@@ -13,8 +14,8 @@ import piniaPluginPersistedstate from "pinia-plugin-persistedstate"
 // import "vuevectormap/src/scss/vuevectormap.scss"
 // import "jsvectormap/dist/maps/world-merc"
 
-import App from "@/App.vue"
-import router from "@/router"
+import App from '@/App.vue'
+import router from '@/router'
 // import { type Locales, type MessageSchema, getI18NConf } from "@/lang/config"
 
 const pinia = createPinia()
@@ -80,7 +81,7 @@ import {
 	NPopover,
 	NDialog,
 	NTable
-} from "naive-ui"
+} from 'naive-ui'
 
 const naive = create({
 	components: [
@@ -155,4 +156,4 @@ app.use(naive)
 // })
 // app.use(VueVectorMap)
 
-app.mount("#app")
+app.mount('#app')
