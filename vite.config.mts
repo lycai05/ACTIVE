@@ -8,7 +8,7 @@ import Components from 'unplugin-vue-components/vite'
 import { viteMockServe } from 'vite-plugin-mock'
 
 // https://vitejs.dev/config/
-export default defineConfig(() => {
+export default defineConfig(config => {
 	return {
 		plugins: [
 			vue({
@@ -42,6 +42,9 @@ export default defineConfig(() => {
 		},
 		server: {
 			open: true
+		},
+		build: {
+			sourcemap: config.mode === 'development' // 是否生成 sourcemap 文件
 		}
 	}
 })
