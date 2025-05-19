@@ -1,3 +1,10 @@
+/*
+ * @Author      : ZhouQiJun
+ * @Date        : 2025-05-19 11:34:46
+ * @LastEditors : ZhouQiJun
+ * @LastEditTime: 2025-05-19 12:09:08
+ * @Description :
+ */
 import { fileURLToPath, URL } from "node:url"
 
 import { defineConfig } from "vite"
@@ -38,5 +45,8 @@ export default defineConfig({
 	},
 	optimizeDeps: {
 		include: ["@fawmi/vue-google-maps", "fast-deep-equal"]
+	},
+	server: {
+		open: true
 	}
 })
