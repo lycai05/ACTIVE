@@ -244,7 +244,7 @@ function binToPosition(binIndex, resolution) {
 	return { start, end }
 }
 
-const initalizeChart = async (needNewData = true) => {
+const initializeChart = async (needNewData = true) => {
 	loading.value = true
 
 	bufferSize = calculateBufferSize(start.value, end.value)
@@ -376,7 +376,7 @@ onMounted(() => {
 	showSpin.value = true
 	initializeData()
 		.then(() => {
-			return initalizeChart()
+			return initializeChart()
 		})
 		.then(() => {
 			showSpin.value = false
