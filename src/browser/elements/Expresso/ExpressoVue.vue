@@ -16,22 +16,22 @@
 </template>
 
 <script lang="ts" setup>
-import { createPinia } from "pinia"
-import { onMounted, ref, watch, computed, h } from "vue"
-import TrackList from "@/browser/elements/TrackList.vue"
-import { useSessionStore } from "@/browser/store/SessionStore/SessionStore"
-import { useTrackStore } from "@/browser/store/TrackStore/TrackStore"
-import { colorNameToHex } from "../../utils/colorNameToHex"
-import { NCard, useMessage, NSpin } from "naive-ui"
+import { createPinia } from 'pinia'
+import { onMounted, ref, watch, computed, h } from 'vue'
+import TrackList from '@/browser/elements/TrackList.vue'
+import { useSessionStore } from '@/browser/store/SessionStore/SessionStore'
+import { useTrackStore } from '@/browser/store/TrackStore/TrackStore'
+import { colorNameToHex } from '../../utils/colorNameToHex'
+import { NCard, useMessage, NSpin } from 'naive-ui'
 
 //import "jquery/jquery.min.js"
 //import "jquery-ui-dist/jquery-ui.min.js"
-import "../../static/js/jquery.flot.js"
-import "../../static/js/jquery.flot.downsample.js"
-import "../../static/js/jquery.flot.selection.js"
-import "./plotCurve.js"
+import '../../static/js/jquery.flot.js'
+import '../../static/js/jquery.flot.downsample.js'
+import '../../static/js/jquery.flot.selection.js'
+import './plotCurve.js'
 
-const emit = defineEmits(["update:tracksInfo", "update:location"])
+const emit = defineEmits(['update:tracksInfo', 'update:location'])
 
 const props = defineProps({
 	id: {
@@ -99,7 +99,7 @@ function useTrackManager(sessionId) {
 			key: sessionId,
 			trackIds: [],
 			sessionConfig: {
-				type: "TrackList",
+				type: 'TrackList',
 				maxTrackNum: 30
 			}
 		}
@@ -130,41 +130,41 @@ function useTrackManager(sessionId) {
 					newSessionTracks = []
 				})
 				.catch(error => {
-					console.error("Error adding tracks:", error)
+					console.error('Error adding tracks:', error)
 				})
 		}
 	}
 
 	const configMap = {
-		lineWidth: "series[0].lineStyle.width",
-		areaOpacity: "series[0].areaStyle.opacity",
-		lineColor: "series[0].lineStyle.color",
-		areaColor: "series[0].areaStyle.color",
-		style: "style",
-		anchorColor: "series[0].itemStyle.color",
-		showGeneLabel: "series[0].label.show",
-		geneLabelFill: "series[0].label.color",
-		exonPosStrandFill: "series[0].itemStyle.positiveStrandColor",
-		exonNegStrandFill: "series[0].itemStyle.negativeStrandColor",
-		display: "series[0].itemStyle.display",
-		nodeColor: "series[0].nodeStyle.fill",
-		nodeOpacity: "series[0].nodeStyle.opacity",
-		edgeWidth: "series[0].edgeStyle.width",
-		edgeColor: "series[0].edgeStyle.fill",
-		maxCountColor: "series[0].itemStyle.maxCountColor",
-		dotOpacity: "series[0].itemStyle.opacity",
-		posColor: "series[0].itemStyle.posColor",
-		negColor: "series[0].itemStyle.negColor",
-		flip: "yAxis.flip",
-		scale: "yAxis.scale",
-		log: "yAxis.log",
-		max: "yAxis.max",
-		min: "yAxis.min",
-		show: "yAxis.show",
-		renderer: "renderer",
-		sortBy: "sortY.sortBy",
-		colorField: "sortY.colorField",
-		sortOrder: "sortY.sortOrder"
+		lineWidth: 'series[0].lineStyle.width',
+		areaOpacity: 'series[0].areaStyle.opacity',
+		lineColor: 'series[0].lineStyle.color',
+		areaColor: 'series[0].areaStyle.color',
+		style: 'style',
+		anchorColor: 'series[0].itemStyle.color',
+		showGeneLabel: 'series[0].label.show',
+		geneLabelFill: 'series[0].label.color',
+		exonPosStrandFill: 'series[0].itemStyle.positiveStrandColor',
+		exonNegStrandFill: 'series[0].itemStyle.negativeStrandColor',
+		display: 'series[0].itemStyle.display',
+		nodeColor: 'series[0].nodeStyle.fill',
+		nodeOpacity: 'series[0].nodeStyle.opacity',
+		edgeWidth: 'series[0].edgeStyle.width',
+		edgeColor: 'series[0].edgeStyle.fill',
+		maxCountColor: 'series[0].itemStyle.maxCountColor',
+		dotOpacity: 'series[0].itemStyle.opacity',
+		posColor: 'series[0].itemStyle.posColor',
+		negColor: 'series[0].itemStyle.negColor',
+		flip: 'yAxis.flip',
+		scale: 'yAxis.scale',
+		log: 'yAxis.log',
+		max: 'yAxis.max',
+		min: 'yAxis.min',
+		show: 'yAxis.show',
+		renderer: 'renderer',
+		sortBy: 'sortY.sortBy',
+		colorField: 'sortY.colorField',
+		sortOrder: 'sortY.sortOrder'
 	}
 
 	function applyUserConfig(defaultConfig, userConfig, configMap) {
@@ -173,7 +173,7 @@ function useTrackManager(sessionId) {
 		Object.keys(userConfig).forEach(key => {
 			const path = configMap[key]
 			if (path) {
-				const pathParts = path.split(".")
+				const pathParts = path.split('.')
 				let currentPart = updatedConfig
 				while (pathParts.length > 1) {
 					const part = pathParts.shift()
@@ -213,7 +213,7 @@ function useTrackManager(sessionId) {
 		for (const key in remainingOptions) {
 			if (/color|Color|fill|Fill/.test(key)) {
 				const value = remainingOptions[key]
-				if (typeof value === "string" && colorNameToHex(value)) {
+				if (typeof value === 'string' && colorNameToHex(value)) {
 					remainingOptions[key] = colorNameToHex(value)
 				}
 			}
@@ -230,7 +230,7 @@ function useTrackManager(sessionId) {
 		return newTrack
 	}
 
-	const modules = import.meta.glob("@/browser/tracks/*/config.ts", { eager: true })
+	const modules = import.meta.glob('@/browser/tracks/*/config.ts', { eager: true })
 	const modulePaths = Object.keys(modules)
 
 	const createTrackComponent = async trackType => {
@@ -288,26 +288,26 @@ watch(
 			}
 		})
 
-		emit("update:tracksInfo", newTracksInfo)
+		emit('update:tracksInfo', newTracksInfo)
 	}
 )
 
 // 处理位置更新
 const handleLocationUpdate = newLocation => {
-	emit("update:location", newLocation)
+	emit('update:location', newLocation)
 }
 
 // When showing a message, use the h function to create the icon
-const createMessage = (content: string, type: "success" | "error" | "info") => {
+const createMessage = (content: string, type: 'success' | 'error' | 'info') => {
 	return message[type]({
 		content,
 		render() {
 			return h(
-				"div",
+				'div',
 				{
-					class: "message-wrapper"
+					class: 'message-wrapper'
 				},
-				[h("span", { class: "message-content" }, content)]
+				[h('span', { class: 'message-content' }, content)]
 			)
 		}
 	})
