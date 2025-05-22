@@ -607,107 +607,105 @@ function createSvgChart() {
 	}
 }
 
-// Lifecycle hooks
+// Set up resize observer for better container size detection
+useResizeObserver(canvasContainer, entries => {
+	if (chartInstance && entries[0]) {
+		const { width: newWidth, height: newHeight } = entries[0].contentRect
+		chartInstance.resize({
+			width: newWidth,
+			height: newHeight
+		})
+	}
+})
+
+watch([width, height], () => {
+	if (chartInstance) {
+		chartInstance.resize({
+			width: width.value,
+			height: height.value
+		})
+	}
+})
+
+// Watch location changes
+watch(
+	[chrom, start, end],
+	async (newValues, oldValues) => {
+		const [newChrom, newStart, newEnd] = newValues
+		const [oldChrom, oldStart, oldEnd] = oldValues
+		// console.log(props.trackViewIndex)
+		// performanceTimer.clear();
+		// performanceTimer.start('locationChange');
+		showSpin.value = true
+
+		// 检查是否在缓冲区范围内
+		if (
+			newChrom === oldChrom &&
+			newStart > bufferedStart &&
+			newEnd < bufferedEnd &&
+			newEnd - newStart == oldEnd - oldStart
+		) {
+			// 使用 nextTick 确保 DOM 更新后再触发事件
+			// await nextTick();
+
+			if (chartInstance) {
+				chartInstance.dispatchAction({
+					type: 'dataZoom',
+					zoomLock: true,
+					startValue: newStart,
+					endValue: newEnd
+				})
+			}
+		} else {
+			// 更新缓冲区范围
+			bufferSize = calculateBufferSize(newStart, newEnd)
+			bufferedStart = Math.max(1, newStart - bufferSize)
+			bufferedEnd = newEnd + bufferSize
+
+			await fetchAndUpdateData()
+		}
+
+		// performanceTimer.end('locationChange');
+		// console.log('Location change total time (ms):',
+		//     performanceTimer.getResult('locationChange'));
+		showSpin.value = false
+	},
+	{ deep: true }
+)
+
+// Watch size and configuration changes
+watch(
+	[height, yAxisConfig, seriesConfig],
+	throttle(() => {
+		if (features.value.length > 0) {
+			// performanceTimer.clear();
+			// performanceTimer.start('configChange');
+			showSpin.value = true
+			updateChart(features.value)
+			// performanceTimer.end('configChange');
+			// console.log('Config change total time (ms):', performanceTimer.getResult('configChange'));
+			showSpin.value = false
+		}
+	}, 1000), // 200ms 的节流时间
+	{ deep: true }
+)
+
+// Watch screenshot store changes
+watch(
+	() => screenshotStore.timestamp,
+	async () => {
+		if (screenshotStore.screenshotType === 'svg') {
+			return createSvgChart()
+		}
+	}
+)
+
 onMounted(async () => {
 	showSpin.value = true
 	initializeChart()
 	await fetchAndUpdateData()
 	showSpin.value = false
-
-	// Set up resize observer for better container size detection
-	useResizeObserver(canvasContainer, entries => {
-		if (chartInstance && entries[0]) {
-			const { width: newWidth, height: newHeight } = entries[0].contentRect
-			chartInstance.resize({
-				width: newWidth,
-				height: newHeight
-			})
-		}
-	})
-
-	// Watch location changes
-	watch(
-		[chrom, start, end],
-		async (newValues, oldValues) => {
-			const [newChrom, newStart, newEnd] = newValues
-			const [oldChrom, oldStart, oldEnd] = oldValues
-			// console.log(props.trackViewIndex)
-			// performanceTimer.clear();
-			// performanceTimer.start('locationChange');
-			showSpin.value = true
-
-			// 检查是否在缓冲区范围内
-			if (
-				newChrom === oldChrom &&
-				newStart > bufferedStart &&
-				newEnd < bufferedEnd &&
-				newEnd - newStart == oldEnd - oldStart
-			) {
-				// 使用 nextTick 确保 DOM 更新后再触发事件
-				// await nextTick();
-
-				if (chartInstance) {
-					chartInstance.dispatchAction({
-						type: 'dataZoom',
-						zoomLock: true,
-						startValue: newStart,
-						endValue: newEnd
-					})
-				}
-			} else {
-				// 更新缓冲区范围
-				bufferSize = calculateBufferSize(newStart, newEnd)
-				bufferedStart = Math.max(1, newStart - bufferSize)
-				bufferedEnd = newEnd + bufferSize
-
-				await fetchAndUpdateData()
-			}
-
-			// performanceTimer.end('locationChange');
-			// console.log('Location change total time (ms):',
-			//     performanceTimer.getResult('locationChange'));
-			showSpin.value = false
-		},
-		{ deep: true }
-	)
-
-	// Watch size and configuration changes
-	watch(
-		[height, yAxisConfig, seriesConfig],
-		throttle(() => {
-			if (features.value.length > 0) {
-				// performanceTimer.clear();
-				// performanceTimer.start('configChange');
-				showSpin.value = true
-				updateChart(features.value)
-				// performanceTimer.end('configChange');
-				// console.log('Config change total time (ms):', performanceTimer.getResult('configChange'));
-				showSpin.value = false
-			}
-		}, 1000), // 200ms 的节流时间
-		{ deep: true }
-	)
-
-	// Watch screenshot store changes
-	watch(
-		() => screenshotStore.timestamp,
-		async () => {
-			if (screenshotStore.screenshotType === 'svg') {
-				return createSvgChart()
-			}
-		}
-	)
-
 	window.addEventListener('resize', chartResize)
-
-	watch([width, height], () => {
-		if (chartInstance) {
-			chartInstance.resize({
-				width: width.value,
-				height: height.value
-			})
-		}
-	})
 })
 
 // Cleanup
