@@ -1,47 +1,3 @@
-<!-- <template>
-    <comp-track-item
-    :location="props.location"
-    :option="props.config.option"
-    @zoomTo="handleZoomTo"
-    >
-    </comp-track-item>
-  </template>
-
-<script setup lang="ts">
-import { defineProps } from 'vue'
-import CompTrackItem from './CompTrackItem.vue'
-
-const props = defineProps({
-    config: {
-        type: Object,
-        required: true
-    },
-    trackViews: {
-        type: Object,
-        required: true
-    }
-})
-const emit = defineEmits(['zoomTo'])
-
-const handleZoomTo = (chrom, start, end) => {
-  emit('zoomTo', chrom, start, end)
-}
-</script> -->
-
-<template>
-	<div class="track-container">
-		<comp-track-item
-			v-for="(view, index) in props.trackViews"
-			:key="index"
-			:location="view"
-			:option="props.config.option"
-			:style="getTrackViewStyle(view, index, props.trackViews, props.style)"
-			:trackViewIndex="index"
-			@zoom-to="handleZoomTo"
-		/>
-	</div>
-</template>
-
 <script setup lang="ts">
 import { defineProps } from 'vue'
 import CompTrackItem from './CompTrackItem.vue'
@@ -71,9 +27,53 @@ const handleZoomTo = (chrom: string, start: number, end: number, activeTrackView
 }
 </script>
 
+<template>
+	<div class="track-container">
+		<comp-track-item
+			v-for="(view, index) in props.trackViews"
+			:key="index"
+			:location="view"
+			:option="props.config.option"
+			:style="getTrackViewStyle(view, index, props.trackViews, props.style)"
+			:trackViewIndex="index"
+			@zoom-to="handleZoomTo"
+		/>
+	</div>
+</template>
+
 <style scoped>
 .track-container {
 	display: flex;
 	align-items: center;
 }
 </style>
+
+<!-- <template>
+    <comp-track-item
+    :location="props.location"
+    :option="props.config.option"
+    @zoomTo="handleZoomTo"
+    >
+    </comp-track-item>
+  </template>
+
+<script setup lang="ts">
+import { defineProps } from 'vue'
+import CompTrackItem from './CompTrackItem.vue'
+
+const props = defineProps({
+    config: {
+        type: Object,
+        required: true
+    },
+    trackViews: {
+        type: Object,
+        required: true
+    }
+})
+const emit = defineEmits(['zoomTo'])
+
+const handleZoomTo = (chrom, start, end) => {
+  emit('zoomTo', chrom, start, end)
+}
+</script> -->
