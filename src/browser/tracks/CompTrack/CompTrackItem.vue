@@ -543,7 +543,7 @@ function initializeChart() {
 
 // 首先定义一个 throttle 函数
 function throttle(fn: Function, delay: number) {
-	let lastTime = 0
+	let lastTime = Date.now()
 	let timer: NodeJS.Timeout | null = null
 
 	return (...args: any[]) => {
@@ -554,10 +554,13 @@ function throttle(fn: Function, delay: number) {
 			if (timer) {
 				clearTimeout(timer)
 			}
-			timer = setTimeout(() => {
-				lastTime = now
-				fn(...args)
-			}, delay)
+			timer = setTimeout(
+				() => {
+					lastTime = now
+					fn(...args)
+				},
+				delay - (now - lastTime)
+			)
 			return
 		}
 
