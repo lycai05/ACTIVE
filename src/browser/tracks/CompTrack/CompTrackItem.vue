@@ -556,7 +556,7 @@ function throttle(fn: Function, delay: number) {
 			}
 			timer = setTimeout(
 				() => {
-					lastTime = now
+					lastTime = Date.now()
 					fn(...args)
 				},
 				delay - (now - lastTime)
