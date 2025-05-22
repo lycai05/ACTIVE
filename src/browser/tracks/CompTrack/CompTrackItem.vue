@@ -542,7 +542,7 @@ function initializeChart() {
 }
 
 // 首先定义一个 throttle 函数
-function throttle(fn: Function, delay: number) {
+function throttle(fn: Function, delay: number = 200) {
 	let lastTime = Date.now()
 	let timer: NodeJS.Timeout | null = null
 
