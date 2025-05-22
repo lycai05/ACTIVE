@@ -548,12 +548,11 @@ function throttle(fn: Function, delay: number) {
 
 	return (...args: any[]) => {
 		const now = Date.now()
+		// 如果定时器存在，则清除 不管是否在间隔内
+		timer && clearTimeout(timer)
 
 		if (now - lastTime < delay) {
 			// 如果距离上次执行还没到指定时间，则取消之前的定时器并重新设置
-			if (timer) {
-				clearTimeout(timer)
-			}
 			timer = setTimeout(
 				() => {
 					lastTime = Date.now()
