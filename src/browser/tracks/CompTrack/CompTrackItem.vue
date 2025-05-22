@@ -546,7 +546,7 @@ function throttle(fn: Function, delay: number) {
 	let lastTime = 0
 	let timer: NodeJS.Timeout | null = null
 
-	return function (...args: any[]) {
+	return (...args: any[]) => {
 		const now = Date.now()
 
 		if (now - lastTime < delay) {
@@ -556,13 +556,13 @@ function throttle(fn: Function, delay: number) {
 			}
 			timer = setTimeout(() => {
 				lastTime = now
-				fn.apply(this, args)
+				fn(...args)
 			}, delay)
 			return
 		}
 
 		lastTime = now
-		fn.apply(this, args)
+		fn(...args)
 	}
 }
 
