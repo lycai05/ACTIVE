@@ -698,7 +698,7 @@ onMounted(async () => {
 		}
 	)
 
-	window.addEventListener('resize', () => chartInstance?.resize())
+	window.addEventListener('resize', chartResize)
 
 	watch([width, height], () => {
 		if (chartInstance) {
@@ -712,13 +712,17 @@ onMounted(async () => {
 
 // Cleanup
 onBeforeUnmount(() => {
+	window.removeEventListener('resize', chartResize)
 	if (chartInstance) {
 		chartInstance.dispose()
 		chartInstance = null
 	}
-	window.removeEventListener('resize', () => chartInstance?.resize())
 	dataCache.clear()
 })
+
+function chartResize() {
+	chartInstance?.resize()
+}
 </script>
 
 <template>
